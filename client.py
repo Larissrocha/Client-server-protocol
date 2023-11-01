@@ -24,7 +24,7 @@ def go(msg):
 
 def listen():
     while True:
-        string = client_sckt.recv(2048).decode("utf-8")
+        string = client.recv(2048).decode(FORMAT)
         if not string:
             break
         print("\n" + string)
@@ -34,7 +34,7 @@ def send():
     message = request.form["message"]
     go(message)
     if message == ":D":
-        client_sckt.close()
+        client.close()
         global own_pid
         os.kill(own_pid, 9)
     return chat()
@@ -44,10 +44,3 @@ if __name__ == "__main__":
     server = threading.Thread(target=listen)
     server.daemon = True
     server.start()
-    app.run()
-
-# if __name__ == '__main__':
-#   quantidade = int(input('Quantas msgs vc vai mandar? '))
-# for i in range(quantidade):
-#   entry = input('Sua mensagem: ')
-#   send(entry)
